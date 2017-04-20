@@ -6,9 +6,8 @@
   <title>JS Bin</title>
 </head>
 <body>
- <link rel="stylesheet" href="./style.css"
- <div class="wrapper">
- <div class="click">
+<div class="wrapper">
+<div class="click">
   <button class="stop">
     <div class="stop1"></div>
     <div class="stop2"></div>
@@ -26,6 +25,213 @@
    <input type="text" id="second" value='00'>
   <button id='reset'>RESET</button>
 </div>
-<script src='main.js'></script>
 </body>
+  <style>
+    body{display:flex;
+background-color:grey;
+justify-content:center;
+}
+.wrapper{
+  width:250px;
+  height:400px;
+  position:relative;
+  background-color:#FFF;
+  box-shadow:0 0 1em #D8E0E3;
+}
+.click{
+  width:100px;
+  height:100px;
+  position:absolute;
+  top:20%;
+  left:27.5%;
+  border: 6px solid #D8E0E3;
+  box-shadow:inset 0 0 5px #E6E6E6;
+  border-radius:50%;
+  background-color:#FFF;
+}
+.stop{
+  position: absolute;
+  width:30px;
+  height:40px;
+  left:35px;
+  top:30px;
+  background-color:rgba(0,0,0,0);
+  border-color:rgba(0,0,0,0);
+  outline:none;
+  display:none;}
+.stop .stop1{
+  position: absolute;
+  top: 5px;
+  height:30px;
+  width: 6px;
+  background-color:#D1DFE0;
+  border-radius:10px;
+}
+.stop .stop2{
+  position: absolute;
+  left: 15px;
+  top: 5px;
+  height:30px;
+  width: 6px;
+  background-color:#D1DFE0;
+  border-radius:10px;
+}
+.hour{
+  position: absolute;
+  top:55%;
+  left:11.5%;
+  font-family:Lucida Console,Monospace;
+  color:#D8E0E3;
+}
+.minute{
+  position: absolute;
+  top:55%;
+  left:37.5%;
+  font-family:Lucida Console,Monospace;
+  color:#D8E0E3;
+}
+.second{
+  position: absolute;
+  top:55%;
+  left:67%;
+  font-family:Lucida Console,Monospace;
+  color:#D8E0E3;
+}
+#start{
+    height:0;
+    position: absolute;
+    left: 45px;
+    top: 30px;
+    display: block;
+    border: 20px solid transparent;
+    border-left-color: #D1DFE0;
+    padding: 0;
+    background-color:rgba(0,0,0,0);
+    outline:none;
+}
+#hour{
+  width:40px;
+  height:30px;
+  position:absolute;
+  top:61%;
+  left:11%;
+  text-align:center;
+  font-size:20px;
+  background-color:#D8E0E3;
+  border:none;
+  box-shadow:inset 0 0 0.3em white;
+}
+#minute{
+  width:40px;
+  height:30px;
+  position:absolute;
+  top:61%;
+  left:41%;
+  text-align:center;
+  font-size:20px;
+  background-color:#D8E0E3;
+  border:none;
+  box-shadow:inset 0 0 0.3em white;
+}
+#second{
+  width:40px;
+  height:30px;
+  position:absolute;
+  top:61%;
+  left:71%;
+  text-align:center;
+  font-size:20px;
+  background-color:#D8E0E3;
+  border:none;
+  box-shadow:inset 0 0 0.3em white;
+}
+#dot1{
+  position:absolute;
+  top:60%;
+  left:33%;
+  font-size:25px;
+}
+#dot2{
+  position:absolute;
+  top:60%;
+  left:63%;
+  font-size:25px;
+}
+#reset{
+  position:absolute;
+  top:75%;
+  left:65%;
+  background-color:rgba(0,0,0,0);
+  border-color:rgba(0,0,0,0);
+  outline:none;
+  font-size:18px;
+  font-family:Lucida Console,Monospace;
+  color:#D3D5D4;
+}
+  </style>
+  <script>
+    var start = document.querySelector('#start')
+ var stop = document.querySelector('.stop')
+ var reset = document.querySelector('#reset')
+ var hour = document.querySelector('#hour')
+ var minute = document.querySelector('#minute')
+ var second = document.querySelector('#second')
+ 
+ start.addEventListener('click', function(){
+ start.style.display='none'
+ stop.style.display='block'
+ console.log(typeof minute.value)
+ console.log(minute.value)
+ console.log(hour.value)
+ var total=parseInt(hour.value,10)*3600+parseInt(minute.value,10)*60+parseInt(second.value,10)
+console.log(total)
+ var id = setInterval(function(){
+  if(total <= 0){
+      clearInterval(id)
+      total=1
+    }
+    total -= 1
+   function pad(input, length, padding)
+{
+  while((input = input.toString()).length + (padding = padding.toString()).length < length)
+  {
+    padding += padding;
+  }
+  return padding.substr(0, length - input.length) + input;
+}
+    hour1 = pad(Math.floor(total/3600),2,0)
+    minute1 =pad(Math.floor((total%3600)/60),2,0)
+    second1 = pad((total%3600)%60,2,0)   
+    hour.value=hour1
+    minute.value=minute1
+    second.value=second1
+    console.log(total)
+    hour.readOnly='readonly'
+    minute.readOnly='readonly'
+    second.readOnly='readonly' 
+   },1000)
+
+  stop.addEventListener('click', function(){
+  start.style.display='block'
+  stop.style.display='none'
+  hour.removeAttribute('readOnly')
+  minute.removeAttribute('readOnly')
+  second.removeAttribute('readOnly')
+  clearInterval(id)
+  })
+
+ reset.addEventListener('click', function(){
+  stop.style.display='none'
+  start.style.display='block'
+  clearInterval(id)
+  hour.value='00'
+  minute.value='00'
+  second.value='00'
+  })})
+  
+
+ var hourvalue = document.querySelector('#hour')
+ var minute = document.querySelector('#minute')
+ var secondvalue = document.querySelector('#second')
+  </script>
 </html>
